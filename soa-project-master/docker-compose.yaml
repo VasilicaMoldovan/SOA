@@ -1,0 +1,43 @@
+version: "3"
+services:
+  authentication-manager:
+    image: vam9876/authentication-manager
+    ports:
+      - "8080:8080"
+    networks:
+      - app_net
+  appointments-api:
+    image: vam9876/appointments-api
+    ports:
+      - "8090:8090"
+    networks:
+      - app_net
+  api-gateway:
+    image: vam9876/api-gateway
+    ports:
+      - "8092:8092"
+    networks:
+      - app_net
+    depends_on:
+      - authentication-manager
+      - appointments-api
+  appointments-ui:
+    image: vam9876/appointments-ui
+    ports:
+      - "8094:8094"
+    networks:
+      - app_net
+    depends_on:
+      - api-gateway
+  login-ui:
+    image: vam9876/login-ui
+    stdin_open: true
+    ports:
+      - "8096:8096"
+    networks:
+      - app_net
+    depends_on:
+      - appointments-ui
+networks:
+  app_net:
+    driver: bridge

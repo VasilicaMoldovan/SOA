@@ -35,12 +35,12 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin(
         {
-            name: 'Books',
+            name: 'Appointments',
             filename:
                 'remote.js',
             exposes: {
-                './BooksComponent':
-                    './src/BooksComponent',
+                './AppointmentComponent':
+                    './src/AppointmentComponent',
             },
             shared: [{
                 react: {

@@ -7,6 +7,20 @@ let error = 'Internal server error';
 let loggedInUsers = [];
 let token = '';
 
+ensureToken = function(req, res, next) {
+    const bearerHeader = req.headers["authorization"];
+    if(typeof bearerHeader !== 'undefined') {
+        const bearer = bearerHeader.split(" ")
+        const bearerToken = bearer[1]
+        jwt.verify(bearerToken, accessTokenSecret, (err, result) => {
+            if(err) { res.sendStatus(403) }
+            else{ next() }
+        })
+    } else {
+        res.sendStatus(403)
+    }
+}
+
 router.route('/login').post((req,res)=>{
     console.log('-----------Request received for path /login POST');
     console.log("bn bn");
@@ -129,21 +143,6 @@ router.route('/appointment').post(ensureToken, (req, res) => {
         res.json({error});
     });
 });
-
-ensureToken = function(req, res, next) {
-    const bearerHeader = req.headers["authorization"];
-    if(typeof bearerHeader !== 'undefined') {
-        const bearer = bearerHeader.split(" ")
-        const bearerToken = bearer[1]
-        jwt.verify(bearerToken, accessTokenSecret, (err, result) => {
-            if(err) { res.sendStatus(403) }
-            else{ next() }
-        })
-    } else {
-        res.sendStatus(403)
-    }
-}
-
 
 module.exports = router;
 

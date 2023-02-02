@@ -48,8 +48,8 @@ module.exports = {
         filename:
           'remote.js',
         remotes: {
-          Books:
-            'Books@http://localhost:8098/remote.js',
+          Appointments:
+            'Appointments@http://localhost:8094/remote.js',
         },
         shared: [{
           react: {

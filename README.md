@@ -1,1 +1,1 @@
-# soa
+# Service Oriented Architectures - Masters Project - Veterinary Clinic app
